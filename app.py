@@ -4,7 +4,7 @@ app = Flask(__name__)
 app.secret_key = "HSL-SORTEERHOED-2020-$^&"
 
 # Eerste pagina van de applicatie. Hierin komen gebruikens wanneer ze naar het hoofddomein van de website gaan
-@app.route("/", methods=["POST", "GET"])
+@app.route("/sorteerhoed", methods=["POST", "GET"])
 def home():
     # Controleerd of de user al in een eerdere sessie zit. Zo ja? dan verwijderd die deze sessie
     if "user" in session:
@@ -19,7 +19,7 @@ def home():
     return render_template('index.html')
 
 # Pagina waar alle vragen op komen te staan, hier moet nog code toegevoegd worden om de vragen uit python naar html te pushen
-@app.route("/vragenlijst", methods=["POST", "GET"])
+@app.route("/sorteerhoed/vragenlijst", methods=["POST", "GET"])
 def vragenlijst():
     # Controleerd of de user in een sessie zit. Zo niet? dan word de user naar de homepagina gestuurd
     if not "user" in session:
@@ -33,7 +33,7 @@ def vragenlijst():
     return render_template('vragenlijst.html')
 
 # Deze pagina geeft aan dat de vragenlijst is ingevuld. Ook geeft het je de funcite om terug te gaan naar de hoofdpagina
-@app.route("/done", methods=["POST", "GET"])
+@app.route("/sorteerhoed/done", methods=["POST", "GET"])
 def done():
     # Post method controleerd of de user op de terug knop heeft gedrukt. Zo ja? Dan word de sessie leeggemaakt en word de gebruiker naar de hoofdpagina gestuur
     if request.method == "POST":
