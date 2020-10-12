@@ -3,8 +3,9 @@ from flask import Flask, redirect, url_for, render_template, request, session
 app = Flask(__name__)
 app.secret_key = "HSL-SORTEERHOED-2020-$^&"
 
+
 # Eerste pagina van de applicatie. Hierin komen gebruikens wanneer ze naar het hoofddomein van de website gaan
-@app.route("/sorteerhoed", methods=["POST", "GET"])
+@app.route("/sorteerhoed/", methods=["POST", "GET"])
 def home():
     # Controleerd of de user al in een eerdere sessie zit. Zo ja? dan verwijderd die deze sessie
     if "user" in session:
@@ -17,6 +18,7 @@ def home():
 
     # Laad de hoofdpagina
     return render_template('index.html')
+
 
 # Pagina waar alle vragen op komen te staan, hier moet nog code toegevoegd worden om de vragen uit python naar html te pushen
 @app.route("/sorteerhoed/vragenlijst", methods=["POST", "GET"])
@@ -32,6 +34,7 @@ def vragenlijst():
     # Laad de vragenlijst pagina in
     return render_template('vragenlijst.html')
 
+
 # Deze pagina geeft aan dat de vragenlijst is ingevuld. Ook geeft het je de funcite om terug te gaan naar de hoofdpagina
 @app.route("/sorteerhoed/done", methods=["POST", "GET"])
 def done():
@@ -43,13 +46,15 @@ def done():
     # Laad de laatste (done) pagina in
     return render_template('done.html', name = getSessionName())
 
+
 # Vraagt de naam van de user op (De naam die je op de hoofdpagina invult)
 def getSessionName():
     return session["user"]
 
+
 # Main method
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host='0.0.0.0', debug=True)
 
     # TODO: Maak database connectie
     # TODO: Laad vragelijst
