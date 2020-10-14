@@ -3,7 +3,7 @@ Sorteerhoed opdracht voor school
 Website URL: http://ctrl.alt-del.nl/
 Sorteerhoed URL: http://ctrl.alt-del.nl:5000/sorteerhoed/
 
-Installatie
+## Installatie
 Flask voor python installeren: (Windows / macOS)
   - https://flask.palletsprojects.com/en/1.1.x/installation/#installation
   - pip install Flask

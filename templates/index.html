@@ -1,27 +1,46 @@
 <html>
-    <head>
-        <title>Sorteerhoed</title>
+<head>
+  <title>Sorteerhoed</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/bulma/bulma.min.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+</head>
 
-        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-    </head>
-    <body>
-      <div class="w3-row-padding-2 w3-padding-64 w3-container">
-        <div class="w3-content">
-
-          <div class="w3-center">
-            <img class="w3-image" src="{{ url_for('static', filename='img/logo.png') }}" style="width:100%;max-width:250px">
-            <h1>Voordat je kan beginnen moet je hieronder je naam invullen</h1>
+<body class="animate__animated animate__fadeIn">
+  <div class="container" style="max-width: 65%; margin-top: 12.5%;">
+    <div class="columns is-vcentered">
+      <div class="column">
+        <div class="columns">
+          <div class="column">
+            <h2 class="subtitle is-3">Welkom,</h2>
+            <p>
+              Je gaat zo een vragenlijst invullen die jou helpt bij het kiezen van een specialisatie.<br>
+              De vragenlijst bestaat uit 15 vragen en hier zit geen tijd aan verbonden.
+            </p><br>
+            <p>
+              Er zijn geen goede of foute antwoorden, kies het antwoord wat het beste bij jou past.
+            </p><br>
+            <p>
+              Succes!
+            </p>
+            <div class="has-text-right" style="margin-top: -2em;">
+              <a class="button is-success" href="">Beginnen</a>
+            </div>
           </div>
-
-          <div class="w3-padding-64">
-            <form action="#" method="post">
-              <p>Naam: <input type="text" name="name" placeholder="Vul hier je naam in"/></p>
-              <input class="w3-red w3-padding w3-button" type="submit" name="submit" value="Versturen">
-            </form>
+          <div class="column has-text-right">
+            <img class="onboarding-image" src="{{ url_for('static', filename='img/onboarding_welcome.png') }}"
+              style="width:100%;max-width:420px">
           </div>
-
         </div>
       </div>
-    </body>
+    </div>
+  </div>
+  <!-- <div class="w3-padding-64">
+    <form action="#" method="post">
+      <p>Naam: <input type="text" name="name" placeholder="Vul hier je naam in"/></p>
+      <input class="w3-red w3-padding w3-button" type="submit" name="submit" value="Versturen">
+    </form>
+  </div> -->
+</body>
+
 </html>
