@@ -5,10 +5,9 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/bulma/bulma.min.css') }}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 </head>
-
 <body class="animate__animated animate__fadeIn">
   <div class="container" style="max-width: 65%; margin-top: 12.5%;">
-    <div class="columns is-vcentered">
+    <div class="columns">
       <div class="column">
         <div class="columns">
           <div class="column">
@@ -24,9 +23,7 @@
               Succes!
             </p>
             <div class="has-text-right" style="margin-top: -2em;">
-              <form action="#" method="post">
-                <input class="button is-success" type="submit" name="button" value="Beginnen">
-              </form>
+                <a href="{{ url_for('gegevens') }}" class="button is-success linkButton" id="indexStart">Beginnen</a>
             </div>
           </div>
           <div class="column has-text-right">
@@ -37,12 +34,8 @@
       </div>
     </div>
   </div>
-  <!-- <div class="w3-padding-64">
-    <form action="#" method="post">
-      <p>Naam: <input type="text" name="name" placeholder="Vul hier je naam in"/></p>
-      <input class="w3-red w3-padding w3-button" type="submit" name="submit" value="Versturen">
-    </form>
-  </div> -->
+  <script src="{{ url_for('static', filename='js/animator.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/main.min.js') }}"></script>
 </body>
 
 </html>

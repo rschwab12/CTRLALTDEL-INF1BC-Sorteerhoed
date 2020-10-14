@@ -39,7 +39,7 @@
 
           <div class="field is-grouped is-grouped-centered">
             <p class="control">
-              <a class="button is-dark" href="{{ url_for('home') }}">Terug</a>
+              <a class="button is-dark linkButton" id="dataBack" href="{{ url_for('home') }}">Terug</a>
             </p>
             <p class="control">
               <input class="button is-success" type="submit" name="button" value="Vragenlijst starten">
@@ -49,6 +49,8 @@
       </div>
     </div>
   </div>
+  <script src="{{ url_for('static', filename='js/animator.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/main.min.js') }}"></script>
 </body>
 </html>
 
