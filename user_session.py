@@ -1,37 +1,57 @@
 def hasSession(session):
-    return "gebruikersnaam" in session
+    return "username" in session
 
-def createSession(session, name):
+def createSession(session, name, student, mail):
     clearSession(session)
-    session["gebruikersnaam"] = name
+    session["username"] = name
+    session["student_number"] = student
+    session["mail_address"] = mail
+    session["huidige_vraag"] = 1
+    session["ingevulde_vragen"] = {}
+
     # session["punten"] = {
     #     "FICT": 0,
     #     "SE": 0,
     #     "BDM": 0,
     #     "IAT": 0
     # }
-    # session["huidige_vraag"] = 1
 
 def clearSession(session):
-    session.pop("gebruikersnaam", None)
-    # session.pop("punten", None)
-    # session.pop("huidige_vraag", None)
+    if hasSession(session):
+        session.pop("username", None)
+        session.pop("student_number", None)
+        session.pop("email_address", None)
+        session.pop("huidige_vraag", None)
+        session.pop("ingevulde_vragen", None)
+        # session.pop("punten", None)
 
-def getGebruikersnaam(session):
-    return session["gebruikersnaam"]
+def getUsername(session):
+    return session["username"]
 
-def setGebruikersnaam(session, naam):
-    session["gebruikersnaam"] = naam
+def setUsername(session, naam):
+    session["username"] = naam
 
-# def getHuidigeVraag(session):
-#     return session["huidige_vraag"]
-#
-# def setHuidigeVraag(session, vraag):
-#     session["huidige_vraag"] = vraag
-#
-# def addHuidigeVraag(session):
-#     setHuidigeVraag(session, (getHuidigeVraag(session) + 1))
-#
+def getStudentNumber(session):
+    return session["student_number"]
+
+def setStudentNumber(session, naam):
+    session["student_number"] = naam
+
+def getEmailAddress(session):
+    return session["email_address"]
+
+def setEmailAddress(session, naam):
+    session["email_address"] = naam
+
+def getHuidigeVraag(session):
+    return int(session["huidige_vraag"])
+
+def setHuidigeVraag(session, vraag: int):
+    session["huidige_vraag"] = vraag
+
+def getIngevuldeVragen(session):
+    return list(session["ingevulde_vragen"])
+
 # def getPunten(session, specialisatie):
 #     if specialisatie in session["punten"]:
 #         return session["punten"][specialisatie]
