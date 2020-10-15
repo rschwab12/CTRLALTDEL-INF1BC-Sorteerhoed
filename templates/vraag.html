@@ -3,42 +3,65 @@
   <title>Sorteerhoed</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/bulma/bulma.min.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/core/checkbox.css') }}">
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
   <script src="https://kit.fontawesome.com/3648ee0da4.js" crossorigin="anonymous"></script>
 </head>
 
-<body class="animate__animated animate__fadeIn">
+<!-- <body class="animate__animated animate__fadeIn"> -->
+<body>
   <div class="container" style="max-width: 65%; margin-top: 12.5%;">
 
     <div class="columns is-vcentered is-centered">
-      <h2 class="subtitle is-3">Vraag 1:</h2>
+      <h2 class="subtitle is-3">{{ question.getVraag() }}</h2>
     </div>
 
     <div class="columns is-vcentered is-centered">
-      <div class="column is-5">
+      <div class="column is-6">
+
         <form method="post">
+
           <div class="field">
-            <input class="is-checkradio" id="exampleRadioDefault" type="radio" name="exampleRadioDefault" checked="checked">
-            <label for="exampleRadioDefault">Radio</label>
+            <div class="box">
+              {% for antwoord in question.getAntwoorden() %}
+                {% if filled > 0 and antwoord.getID() == filled %}
+                  <input type="radio" id="{{ antwoord.getID() }}" name="antwoord" value="{{ antwoord.getID() }}" checked/>
+                  <label for="{{ antwoord.getID() }}">{{ antwoord.getTekst() }}</label>
+                {%else%}
+                  <input type="radio" id="{{ antwoord.getID() }}" name="antwoord" value="{{ antwoord.getID() }}"/>
+                  <label for="{{ antwoord.getID() }}">{{ antwoord.getTekst() }}</label>
+                {%endif%}
+              {%endfor%}
+            </div>
           </div>
 
           <div class="field">
-            <input class="is-checkradio" id="exampleRadioDefault" type="radio" name="exampleRadioDefault" checked="checked">
-            <label for="exampleRadioDefault">Radio</label>
+            <div class="columns is-variable is-1-mobile is-0-tablet is-3-desktop is-8-widescreen is-2-fullhd">
+              <div class="column">
+                {% if back %} <p class="control">
+                  <input class="button is-danger" type="submit" name="button" value="Vorige vraag">
+                </p> {%endif%}
+              </div>
+              <div class="column">
+                <p class="control">
+                  <input class="button is-dark" type="submit" name="button" value="Overzicht">
+                </p>
+              </div>
+              <div class="column">
+                {% if next %}
+                <p class="control is-grouped-right">
+                  <input class="button is-success" type="submit" name="button" value="Volgende vraag">
+                </p>
+                {% else %}
+                <p class="control is-grouped-right">
+                  <input class="button is-primary" type="submit" name="button" value="Bevestigen">
+                </p>
+                {%endif%}
+              </div>
+            </div>
           </div>
 
-          <div class="field is-grouped is-grouped-centered">
-            <p class="control">
-              <input class="button is-danger" type="submit" name="button" value="Vorige vraag">
-            </p>
-            <p class="control">
-              <input class="button is-dark" type="submit" name="button" value="Overzicht">
-            </p>
-            <p class="control">
-              <input class="button is-success" type="submit" name="button" value="Volgende vraag">
-            </p>
-          </div>
         </form>
       </div>
     </div>
