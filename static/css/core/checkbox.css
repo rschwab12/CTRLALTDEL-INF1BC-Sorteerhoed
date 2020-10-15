@@ -1,0 +1,87 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700);
+/** * Basic stuff - not really radio style related */
+ html {
+	 box-sizing: border-box;
+	 font-size: 95%;
+	 line-height: 1.5;
+	 font-family: 'Open Sans', sans-serif;
+	 text-align: center;
+}
+
+ *, *:before, *:after {
+	 box-sizing: inherit;
+}
+
+ .box {
+	 width: 100%;
+	 max-width: 600px;
+	 margin: 2rem auto;
+	 background: white;
+	 border: 1px solid white;
+	 border-radius: 3px;
+	 text-align: left;
+}
+
+ input[type=radio] {
+	 display: none;
+}
+
+  .active-label, label:focus, label:hover, label:active, input:checked + label {
+	 color: #8DC983;
+}
+ .active-label:before, label:focus:before, label:hover:before, label:active:before, input:checked + label:before {
+	 background: white;
+	 border-color: #8DC983;
+}
+
+ label {
+	 font-size: 1rem;
+	 font-weight: bold;
+	 line-height: 1;
+	 cursor: pointer;
+	 display: block;
+	 padding: 1rem 1rem 1rem 3rem;
+	 position: relative;
+	 border-top: 1px solid rgba(0, 0, 0, .1);
+	 background: white;
+	 whitespace: no-wrap;
+	 overflow: hidden;
+	 text-overflow: ellipsis;
+	 transition: all 0.15s ease;
+}
+
+ label:first-of-type {
+	 border: 0;
+}
+
+ label:before {
+	 content: "";
+	 position: absolute;
+	 left: 1rem;
+	 top: 1rem;
+	 width: 16px;
+	 height: 16px;
+	 border-radius: 50%;
+	 border: 0.2rem solid #ccc;
+}
+
+/** * How it should look when checked */
+ input:checked + label:before {
+	 border-color: white;
+	 border: none;
+	 background: #8DC983;
+}
+
+/** * How it should look when disabled */
+ input:disabled + label {
+	 background: #efefef;
+	 color: rgba(0, 0, 0, .5);
+	 cursor: not-allowed;
+}
+ input:disabled + label:hover {
+	 border-color: rgba(0, 0, 0, .1);
+}
+ input:disabled + label:before {
+	 border-color: white;
+	 background: white;
+}
