@@ -11,25 +11,23 @@
       <div class="column">
         <div class="columns is-vcentered">
           <div class="column">
-            <h2 class="subtitle is-3">Welkom,</h2>
+            <h2 class="subtitle is-3">Jouw uitslag</h2>
             <p>
-              Je gaat zo een vragenlijst invullen die jou helpt bij het kiezen van een specialisatie.<br>
-              De vragenlijst bestaat uit 15 vragen en hier zit geen tijd aan verbonden.
+              We hebben je antwoorden goed bekeken.<br>
+              De specialisatie <b>Forensisch ICT</b> past het beste bij jou, op basis van jouw antwoorden.
             </p><br>
             <p>
-              Er zijn geen goede of foute antwoorden, kies het antwoord wat het beste bij jou past.
-            </p><br>
-            <p>
-              Succes!
+              Als je dat graag wilt kun je je antwoorden nog eens terug kijken of we kunnen deze naar je toe sturen per mail.
             </p>
-            <form method="post">
-              <div class="has-text-right" style="margin-top: -2em;">
-                  <input class="button is-success linkButton" type="submit" name="button" value="Beginnen">
-              </div>
-            </form>
+            <br><br>
+            <div class="has-text-centered" style="margin-top: -2em;">
+                <a href="{{ url_for('einde') }}" class="button is-success linkButton" id="indexStart">Antwoorden bekijken</a>
+                <a href="{{ url_for('einde') }}" class="button is-success linkButton" id="indexStart">Verstuur mijn resultaten</a><br><br>
+                <a href="{{ url_for('home') }}" class="button is-danger is-small linkButton" id="indexStart">Verwijderen en verlaten</a>
+            </div>
           </div>
           <div class="column has-text-right">
-            <img class="onboarding-image" src="{{ url_for('static', filename='img/onboarding_welcome.png') }}"
+            <img class="onboarding-image" src="{{ url_for('static', filename='img/goodbye.png') }}"
               style="width:100%;max-width:420px">
           </div>
         </div>

@@ -20,6 +20,10 @@ def home():
 
     return render_template('index.html')
 
+@app.route("/sorteerhoed/einde", methods=["POST", "GET"])
+def einde():
+    return render_template('finished.html')
+
 @app.route("/sorteerhoed/vraag/", methods=["POST", "GET"])
 def vraag():
     if not user_session.hasSession(session):
