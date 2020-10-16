@@ -14,23 +14,11 @@ def home():
         method = request.method
 
         if form["button"] == "Beginnen":
-            return redirect(url_for("gegevens"))
-
-    return render_template('index.html')
-
-@app.route("/sorteerhoed/gegevens/", methods=["POST", "GET"])
-def gegevens():
-    if request.method == "POST" and "button" in request.form:
-        form = request.form
-        method = request.method
-
-        if form["button"] == "Vragenlijst starten":
             user_session.clearSession(session)
-            user_session.createSession(session, form["username"], "TEST123", "Tom@alt-del.nl")
-            # user_session.createSession(session, form["username"], form["student_number"], form["mail_address"])
+            user_session.createSession(session, "Nope", "TEST123", "Tom@alt-del.nl")
             return redirect(url_for("vraag"))
 
-    return render_template('gegevens.html')
+    return render_template('index.html')
 
 @app.route("/sorteerhoed/vraag/", methods=["POST", "GET"])
 def vraag():
