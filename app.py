@@ -9,7 +9,7 @@ import mysql.connector
 app = Flask(__name__)
 app.secret_key = "HSL-SORTEERHOED-2020-$^&"
 
-@app.route("/sorteerhoed/", methods=["POST", "GET"])
+@app.route("/", methods=["POST", "GET"])
 def home():
     if request.method == "POST" and "button" in request.form:
         form = request.form
@@ -22,7 +22,7 @@ def home():
 
     return render_template('index.html')
 
-@app.route("/sorteerhoed/vraag/", methods=["POST", "GET"])
+@app.route("/vraag/", methods=["POST", "GET"])
 def vraag():
     if not user_session.hasSession(session):
         return redirect(url_for("home"))
@@ -58,7 +58,7 @@ def vraag():
     filled = user_session.getAntwoord(session, current_question)
     return render_template('vraag.html', question=getQuestionByID(current_question), back=back, next=next, filled=filled)
 
-@app.route("/sorteerhoed/overzicht/", methods=["POST", "GET"])
+@app.route("/overzicht/", methods=["POST", "GET"])
 def overzicht():
     if not user_session.hasSession(session):
         return redirect(url_for("home"))
@@ -140,8 +140,9 @@ if __name__ == "__main__":
     for id in q:
         questions.append(Question(q, id))
 
-    conn1 = database.setup()
-    database.laad_vragen(conn1)
+    db_conn = database.setup()
+    vragen_dict = database.laad_vragen(db_conn)
+
     app.run(debug=True)
     # app.run(host='0.0.0.0', debug=True)
 
