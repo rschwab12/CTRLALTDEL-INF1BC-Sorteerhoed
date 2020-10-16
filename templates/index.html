@@ -22,9 +22,11 @@
             <p>
               Succes!
             </p>
-            <div class="has-text-right" style="margin-top: -2em;">
-                <a href="{{ url_for('gegevens') }}" class="button is-success linkButton" id="indexStart">Beginnen</a>
-            </div>
+            <form method="post">
+              <div class="has-text-right" style="margin-top: -2em;">
+                  <input class="button is-success linkButton" type="submit" name="button" value="Beginnen">
+              </div>
+            </form>
           </div>
           <div class="column has-text-right">
             <img class="onboarding-image" src="{{ url_for('static', filename='img/onboarding_welcome.png') }}"
