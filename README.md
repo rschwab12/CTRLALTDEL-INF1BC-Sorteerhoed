@@ -2,6 +2,7 @@
 Sorteerhoed opdracht voor school
 Website URL: http://ctrl.alt-del.nl/
 Sorteerhoed URL: http://ctrl.alt-del.nl:5000/sorteerhoed/
+Hogeschool Leiden Informatica URL: https://www.hsleiden.nl/informatica
 
 ## Installatie
 Flask voor python installeren: (Windows / macOS)
