@@ -1,8 +1,10 @@
 from flask import Flask, redirect, url_for, render_template, request, session
 import json
+import database
 import user_session
 from question.question import *
 from question.answer import *
+import mysql.connector
 
 app = Flask(__name__)
 app.secret_key = "HSL-SORTEERHOED-2020-$^&"
@@ -150,6 +152,8 @@ if __name__ == "__main__":
     for id in q:
         questions.append(Question(q, id))
 
+    conn1 = database.setup()
+    database.laad_vragen(conn1)
     app.run(debug=True)
     # app.run(host='0.0.0.0', debug=True)
 
