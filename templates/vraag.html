@@ -23,7 +23,7 @@
       <div class="column is-6">
         <form method="post">
             {% for antwoord in question.getAntwoorden() %}
-            <!-- <div class="box">
+            <div class="box">
                 {% if filled > 0 and antwoord.getID() == filled %}
                   <input type="radio" id="{{ antwoord.getID() }}" name="antwoord" value="{{ antwoord.getID() }}" checked/>
                   <label for="{{ antwoord.getID() }}">{{ antwoord.getTekst() }}</label>
@@ -31,7 +31,7 @@
                   <input type="radio" id="{{ antwoord.getID() }}" name="antwoord" value="{{ antwoord.getID() }}"/>
                   <label for="{{ antwoord.getID() }}">{{ antwoord.getTekst() }}</label>
                 {%endif%}
-            </div> -->
+            </div>
             {%endfor%}
 
           <div class="field">

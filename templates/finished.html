@@ -31,8 +31,17 @@
             </div>
           </div>
           <div class="column has-text-right">
-            <img class="onboarding-image" src="{{ url_for('static', filename='img/goodbye.png') }}"
-              style="width:100%;max-width:420px">
+            <picture>
+              <source 
+                srcset="{{ url_for('static', filename='img/finished-dark.svg') }}"
+                media="(prefers-color-scheme: dark)"
+              />
+              <source
+                srcset="{{ url_for('static', filename='img/finished-light.svg') }}"
+                media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
+              />
+              <img class="onboarding-image" src="{{ url_for('static', filename='img/finished-light.svg') }}" id="screenshot" loading="lazy" />
+            </picture>
           </div>
         </div>
       </div>
