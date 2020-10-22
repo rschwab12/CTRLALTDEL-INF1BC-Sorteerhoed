@@ -34,6 +34,7 @@ def vraag():
     if request.method == 'POST':
         userAnswer = request.values.get('user-answer')
         user_session.setAntwoord(session, current_question, int(userAnswer))
+
         if next:
             user_session.setHuidigeVraag(session, (current_question+1))
             return redirect(url_for("vraag"))

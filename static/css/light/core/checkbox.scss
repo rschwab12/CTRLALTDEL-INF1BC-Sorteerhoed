@@ -8,8 +8,22 @@
     cursor: pointer;
 }
 
+.answer-box-filled{
+    background-color: hsl(126deg, 96%, 84%);
+    border-radius: 5px;
+    color: black;
+    padding: 1em;
+    margin: 1em;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.01), 0 3px 10px 0 rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+}
+
 .answer-box:hover{
     background-color: hsl(113, 1%, 98%);
+}
+
+.answer-box-filled:hover{
+    background-color: hsl(126deg, 96%, 86%);
 }
 
 .answer-prefix {
