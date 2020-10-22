@@ -1,1 +1,23 @@
- 
+.answer-box{
+    background-color: hsl(109, 100%, 100%);
+    border-radius: 5px;
+    color: black;
+    padding: 1em;
+    margin: 1em;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.01), 0 3px 10px 0 rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+}
+
+.answer-box:hover{
+    background-color: hsl(113, 1%, 98%);
+}
+
+.answer-prefix {
+    color: white;
+    background-color: hsl(195, 100%, 47%);
+    border-radius: 5px;
+    padding: .25em .5em;
+    font-size: 13px;
+    font-weight: bold;
+    margin-right: 1em;
+}

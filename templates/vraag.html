@@ -1,68 +1,48 @@
 <html>
+
 <head>
   <title>Sorteerhoed</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/main.min.css') }}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
   <script src="https://kit.fontawesome.com/3648ee0da4.js" crossorigin="anonymous"></script>
-  <script
-  src="https://code.jquery.com/jquery-3.5.1.min.js"
-  integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
-  crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+    integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 </head>
 
-<!-- <body class="animate__animated animate__fadeIn"> -->
 <body>
-  <div class="container" style="max-width: 65%; margin-top: 12.5%;">
-
-    <div class="columns is-vcentered is-centered">
-      <h2 class="subtitle is-3">{{ question.getVraag() }}</h2>
-    </div>
-
-    <div class="columns is-vcentered is-centered">
-      <div class="column is-6">
-        <form method="post">
-            {% for antwoord in question.getAntwoorden() %}
-            <div class="box">
-                {% if filled > 0 and antwoord.getID() == filled %}
-                  <input type="radio" id="{{ antwoord.getID() }}" name="antwoord" value="{{ antwoord.getID() }}" checked/>
-                  <label for="{{ antwoord.getID() }}">{{ antwoord.getTekst() }}</label>
-                {%else%}
-                  <input type="radio" id="{{ antwoord.getID() }}" name="antwoord" value="{{ antwoord.getID() }}"/>
-                  <label for="{{ antwoord.getID() }}">{{ antwoord.getTekst() }}</label>
-                {%endif%}
-            </div>
-            {%endfor%}
-
-          <div class="field">
-            <div class="columns is-variable is-1-mobile is-0-tablet is-3-desktop is-8-widescreen is-2-fullhd">
-              <div class="column">
-                {% if back %} <p class="control">
-                  <input class="button is-danger" type="submit" name="button" value="Vorige vraag">
-                </p> {%endif%}
-              </div>
-              <div class="column">
-                <p class="control">
-                  <input class="button is-dark" type="submit" name="button" value="Overzicht">
-                </p>
-              </div>
-              <div class="column">
-                {% if next %}
-                <p class="control is-grouped-right">
-                  <input class="button is-success" type="submit" name="button" value="Volgende vraag">
-                </p>
-                {% else %}
-                <p class="control is-grouped-right">
-                  <input class="button is-primary" type="submit" name="button" value="Bevestigen">
-                </p>
-                {%endif%}
-              </div>
-            </div>
+  <div id="question-body" class="animate__animated animate__fadeIn">
+    <div class="container" style="max-width: 500px; margin-top: 12.5%;">
+      <div class="has-text-centered">
+        <h2 class="subtitle is-3">{{ question.getVraag() }}</h2>
+      </div>
+      &nbsp;
+      <div class="has-text-centered">
+        {% for antwoord in question.getAntwoorden() %}
+        <div class="answer-box" id="answer-option-{{ antwoord.getID() }}" data-answer="{{ antwoord.getID() }}">
+          <div class="has-text-left">
+            <span class="answer-prefix">{{ antwoord.getLetter() }}</span>{{ antwoord.getTekst() }}
           </div>
-
-        </form>
+        </div>
+        {%endfor%}
+        {% if back %}
+        <a class="button is-danger" href="{{ url_for('vraag', a='back') }}"><i class="fas fa-arrow-left"></i>&nbsp;Vorige
+          vraag</a>
+        {%endif%}
+        &nbsp;
+        <a class="button is-info" href="{{ url_for('overzicht') }}"><i class="fas fa-list"></i>&nbsp;Overzicht</a>
+      </div>
+      <br>
+      <div class="has-text-centered">
+        {% if not next %}
+          Dit is de laatste vraag.<br>Wanneer je een antwoord kiest zie je je resultaten en kun je jouw antwoorden niet meer aanpassen.
+        {%endif%}
       </div>
     </div>
   </div>
+  <script src="{{ url_for('static', filename='js/answerFormHandler.min.js') }}"></script>
+  <form id="answer-form" method="POST">
+    <input type="hidden" id="user-answer" name="user-answer">
+  </form>
 </body>
 </html>
