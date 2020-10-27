@@ -48,24 +48,25 @@ def set_ans(conn, Base): #supposed to run with laad_vragen()
     
     
     
-    for Var1 in Questions:
-        MyComm = "SELECT * FROM answers WHERE questionId=" + str(Var1) + " ORDER BY answerId"
+    for Instance in Questions:
+        Query = "SELECT * FROM answers WHERE questionId=" + str(Instance) + " ORDER BY answerId"
         try:
-            mycursor.execute(MyComm) #Try emptying the database again
+            mycursor.execute(Query) #Try emptying the database again
         except:
             print('sorry but it looks like we cant fetch from the database')
         myresult = mycursor.fetchall()
         try:
             for Var2 in myresult:
-                #Letter = chr(Var1 + 96)
-                Letter = 'Z'
-                Questions[Var1]['antwoorden'].update({'letter':'z', 'antwoord':Var2['text'], 'punten': {'FICT': Var2['fict'], 'SE': Var2['se'], 'BDM': Var2['bdam'], 'IAT': Var2['iat']}}) 
+                pos = int(Var2['position'])
+                Letter = chr(pos + 96)
+                
+                
+                Questions[Instance]['antwoorden'].update({pos: {'letter':Letter, 'antwoord':Var2['text'], 'punten': {'FICT': Var2['fict'], 'SE': Var2['se'], 'BDM': Var2['bdam'], 'IAT': Var2['iat']}}}) 
                 
                 
         except Exception as a:
             print('het werkte niet...')
             print(a)
-        
     return Questions
 
 def insert_vragenlijst(username, score):
