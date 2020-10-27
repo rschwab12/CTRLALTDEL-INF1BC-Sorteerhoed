@@ -5,6 +5,7 @@ import user_session
 from question.question import *
 from question.answer import *
 import mysql.connector
+import pprint
 
 app = Flask(__name__)
 app.secret_key = "HSL-SORTEERHOED-2020-$^&"
@@ -72,78 +73,14 @@ def getQuestionByID(id: int):
             return question
 
 if __name__ == "__main__":
-    q = {
-        1: {
-            "vraag": "Vraag 1?",
-            "antwoorden": {
-                1: {
-                    "letter": "A",
-                    "antwoord": "Antwoord 1",
-                    "punten": {"FICT": 1, "SE": 1, "BDM": 1, "IAT": 1}
-                },
-                2: {
-                    "letter": "B",
-                    "antwoord": "Antwoord 2",
-                    "punten": {"FICT": 1, "SE": 1, "BDM": 1, "IAT": 1}
-                },
-                3: {
-                    "letter": "C",
-                    "antwoord": "Antwoord 3",
-                    "punten": {"FICT": 1, "SE": 1, "BDM": 1, "IAT": 1}
-                }
-            }
-        },
-        2: {
-            "vraag": "Vraag 2?",
-            "antwoorden": {
-                1: {
-                    "letter": "A",
-                    "antwoord": "Antwoord 1",
-                    "punten": {"FICT": 1, "SE": 1, "BDM": 1, "IAT": 1}
-                },
-                2: {
-                    "letter": "B",
-                    "antwoord": "Antwoord 2",
-                    "punten": {"FICT": 1, "SE": 1, "BDM": 1, "IAT": 1}
-                },
-                3: {
-                    "letter": "C",
-                    "antwoord": "Antwoord 3",
-                    "punten": {"FICT": 1, "SE": 1, "BDM": 1, "IAT": 1}
-                }
-            }
-        },
-        3: {
-            "vraag": "Vraag 3?",
-            "antwoorden": {
-                1: {
-                    "letter": "A",
-                    "antwoord": "Antwoord 1",
-                    "punten": {"FICT": 1, "SE": 1, "BDM": 1, "IAT": 1}
-                },
-                2: {
-                    "letter": "B",
-                    "antwoord": "Antwoord 2",
-                    "punten": {"FICT": 1, "SE": 1, "BDM": 1, "IAT": 1}
-                },
-                3: {
-                    "letter": "C",
-                    "antwoord": "Antwoord 3",
-                    "punten": {"FICT": 1, "SE": 1, "BDM": 1, "IAT": 1}
-                }
-            }
-        }
-    }
-
-    questions = []
-    for id in q:
-        questions.append(Question(q, id))
-
+    pp = pprint.PrettyPrinter()
     db_conn = database.setup()
-    vragen_dict = database.laad_vragen(db_conn)
-
+    vragen_dict = database.set_ans(db_conn, database.laad_vragen(db_conn)) 
+    questions = []
+    for id in vragen_dict:
+        questions.append(Question(vragen_dict, id))
     app.run(debug=True)
-    # app.run(host='0.0.0.0', debug=True)
+    #app.run(host='0.0.0.0', debug=True)
 
     # question = Question(q, 1)
     # print(question.getVraag())
