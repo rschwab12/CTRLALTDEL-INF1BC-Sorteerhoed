@@ -6,6 +6,8 @@ from question.question import *
 from question.answer import *
 import mysql.connector
 import pprint
+import string
+import random
 
 app = Flask(__name__)
 app.secret_key = "HSL-SORTEERHOED-2020-$^&"
@@ -33,21 +35,26 @@ def vraag():
     next = getQuestionByID(int(current_question+1)) is not None
 
     if request.method == 'POST':
-        userAnswer = request.values.get('user-answer')
-        user_session.setAntwoord(session, current_question, int(userAnswer))
 
-        if next:
-            user_session.setHuidigeVraag(session, (current_question+1))
-            return redirect(url_for("vraag"))
+        if request.values.get('csrf-token') == user_session.getCSRFToken(session):
+            userAnswer = request.values.get('user-answer')
+            user_session.setAntwoord(session, current_question, int(userAnswer))
+
+            if next:
+                user_session.setHuidigeVraag(session, (current_question+1))
+                return redirect(url_for("vraag"))
+            else:
+                return redirect(url_for("einde"))
         else:
-            return redirect(url_for("einde"))
+            user_session.clearSession(session)
+            return redirect(url_for("badrequest"))
 
     if request.values.get('a') == 'back':
         user_session.setHuidigeVraag(session, (current_question-1))
         return redirect(url_for("vraag"))
 
     filled = user_session.getAntwoord(session, current_question)
-    return render_template('vraag.html', question=getQuestionByID(current_question), back=back, next=next, filled=filled)
+    return render_template('vraag.html', question=getQuestionByID(current_question), back=back, next=next, filled=filled, csrfToken=user_session.setCSRFToken(session))
 
 @app.route("/overzicht", methods=["POST", "GET"])
 def overzicht():
@@ -71,6 +78,20 @@ def getQuestionByID(id: int):
     for question in questions:
         if question.id == id:
             return question
+
+@app.route("/bad-request", methods=["GET"])
+def badrequest():
+    return render_template('errors/400.html'), 400
+
+@app.errorhandler(404)
+def page_not_found(e):
+    # note that we set the 404 status explicitly
+    return render_template('errors/404.html'), 404
+
+@app.errorhandler(400)
+def page_not_found(e):
+    # note that we set the 404 status explicitly
+    return render_template('errors/400.html'), 400
 
 if __name__ == "__main__":
     pp = pprint.PrettyPrinter()

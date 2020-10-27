@@ -1,3 +1,6 @@
+import string
+import random
+
 def hasSession(session):
     return "huidige_vraag" in session
 
@@ -60,3 +63,12 @@ def getIngevuldeAntwoorden(session):
         ingevuld.append(int(a))
 
     return ingevuld
+
+def getCSRFToken(session):
+    return session["CSRF-TOKEN"]
+
+def setCSRFToken(session):
+    letters = string.ascii_letters
+    token = ''.join(random.choice(letters) for i in range(20))
+    session["CSRF-TOKEN"] = token
+    return token
