@@ -3,7 +3,7 @@ class Answer:
         self.dict = dict
         self.id = id
 
-        self.letter = dict[self.id]["letter"]
+        self.letter = dict[self.id]["doodoo"]
         self.antwoord = dict[self.id]["antwoord"]
         self.punten = dict[self.id]["punten"]
 
