@@ -43,6 +43,7 @@
   </div>
   <script src="{{ url_for('static', filename='js/answerFormHandler.min.js') }}"></script>
   <form id="answer-form" method="POST">
+    <input type="hidden" name="csrf-token" value={{csrfToken}}>
     <input type="hidden" id="user-answer" name="user-answer">
   </form>
 </body>
