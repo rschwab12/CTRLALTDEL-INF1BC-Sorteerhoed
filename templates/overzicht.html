@@ -13,11 +13,9 @@
 
 <body class="animate__animated animate__fadeIn">
   <div class="container" style="max-width: 65%; margin-top: 12.5%;">
-
     <div class="columns is-vcentered is-centered">
       <h2 class="subtitle is-3">Overzicht</h2>
     </div>
-
     <form method="post">
       <div class="columns is-multiline is-centered">
         <div class="column is-5">
@@ -37,14 +35,11 @@
         </div>
       </div>
     </form>
-
     <br><br><br>
-
     {% if questions|length == filled|length %}
       <div class="field is-grouped is-grouped-centered">
         <p class="control">
           <a class="button is-primary" href="{{ url_for('einde') }}">Resultaat berekenen</a>
-          <!-- <a class="button is-primary" type="submit" name="button" value="Resultaat berekenen"> -->
         </p>
       </div>
     {%endif%}
