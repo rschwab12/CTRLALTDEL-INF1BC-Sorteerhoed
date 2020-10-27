@@ -72,3 +72,14 @@ def set_ans(conn, Base): #supposed to run with laad_vragen()
 def insert_vragenlijst(username, score):
     # score = {fict=0, bdam=3} etc
     return
+
+def get_punten_voor_spec(vraag, antwoord, conn):
+    mycursor = conn.cursor(dictionary=True)
+    #Query = f"SELECT `fict`,`iat`,`bdam`,`se` FROM answers WHERE `questionId` = 2 AND `position` = 2"
+    Query = f"SELECT `fict`,`iat`,`bdam`,`se` FROM answers WHERE `questionId` = {vraag} AND `position` = {antwoord}"
+    try:
+        mycursor.execute(Query)
+    except:
+        print('sorry but it looks like we cant fetch from the database')
+    myresult = mycursor.fetchall()
+    return myresult

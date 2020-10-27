@@ -23,7 +23,33 @@ def home():
 
 @app.route("/einde", methods=["GET"])
 def einde():
-    return render_template('finished.html')
+    eindantwoorden = user_session.getAntwoorden(session)
+    punten = {'fict': 0, 'bdam': 0, 'iat': 0, 'se': 0}
+
+    for vraag in eindantwoorden:
+        antwoorden = database.get_punten_voor_spec(vraag, eindantwoorden[vraag], db_conn)
+        for specialisatie in antwoorden:
+            punten['fict'] += specialisatie['fict']
+            punten['bdam'] += specialisatie['bdam']
+            punten['iat'] += specialisatie['iat']
+            punten['se'] += specialisatie['se']
+        #print(f"Vraag {vraag}: antwoord {eindantwoorden[vraag]}")
+
+    max_key = max(punten, key=punten.get)
+    # DEBUG logs
+    print(f"Punten: {punten}")
+    print(f"Beste optie: {max_key}")
+
+    if max_key == "fict":
+        eindspecialisatie = "Forensisch ICT"
+    elif max_key == "bdam":
+        eindspecialisatie = "Business Data Management"
+    elif max_key == "iat":
+        eindspecialisatie = "Interactie Technologie"
+    elif max_key == "se":
+        eindspecialisatie = "Software Engineering"
+
+    return render_template('finished.html', eindspecialisatie=eindspecialisatie, tekst=get_promotekst(max_key))
 
 @app.route("/vraag", methods=["POST", "GET"])
 def vraag():
@@ -92,6 +118,21 @@ def page_not_found(e):
 def page_not_found(e):
     # note that we set the 404 status explicitly
     return render_template('errors/400.html'), 400
+
+def get_promotekst(specialisatie):
+    # Sorry, beetje rommelig dit... maar het werkt :)
+    fict = 'Jij bent analytisch, doelgericht en vasthoudend. Je houdt van rechercheren en onderzoeken en voelt je verantwoordelijk voor het bevorderen van een veilige maatschappij en het verminderen van criminaliteit. Je bent innovatief en nieuwsgierig naar de nieuwste technologieën en de mogelijkheden die ze bieden.<br> Je kunt goed omgaan met mensen en weet ze naar waarde in te schatten. Je hebt er plezier in om slimme wegen te vinden die leiden naar oplossingen voor ingewikkelde zaken.<br> Met Forensisch ICT heb je carrièrekansen bij politie, justitie, defensie maar ook in de particuliere markt! <br>Meer weten over Forensisch ICT? <a href="https://www.hsleiden.nl/informatica/opbouw-studie/forensisch-ict.html" target="_blank"><b>Klik hier!</b></a>'
+    bdam = 'Jij bent nieuwsgierig en analytisch ingesteld. Je bent niet bang om veel met data te werken, sterker nog, jij haalt hier je plezier uit! Je bent een data-tovenaar, van modelleren tot analyseren en adviseren, met data krijg jij alles voor elkaar. Je vindt het leuk om onderzoek te doen en gaat werken met Artificial Intelligence.<br> Jouw kennis en vaardigheden helpen bedrijven te verbeteren en optimaliseren.<br> Met Business Data Management kan je bijvoorbeeld aan de slag als data-analist of als Business Intelligence consultant. <br>Meer weten over Business Data Management? <a href="https://www.hsleiden.nl/informatica/opbouw-studie/business-data-management.html" target="_blank"><b>Klik hier!</b></a>'
+    iat = 'Jij bent creatief en hebt geen vrees voor technologie. Je bent nieuwsgierig naar de nieuwste ontwikkelingen in technologie, social media en mogelijkheden van gebruikersinteractie.<br> Je bent kritisch en kan je goed verplaatsen in gebruikers.<br> Je kunt goed luisteren naar de wensen en belangen van verschillende partijen en samenwerken in multidisciplinaire teams.<br> Met Interactie Technologie kan je aan de slag als bijvoorbeeld Interaction designer of als Desktoppublisher.<br>Meer weten over Interactie Technologie? <a href="https://www.hsleiden.nl/informatica/opbouw-studie/interactie-technologie.html" target="_blank"><b>Klik hier!</b></a>'
+    se = 'Jij hebt een sterk analytisch vermogen. Je bent creatief en ontwerpt en programmeert graag. Je hebt er plezier in om slimme oplossingen voor ingewikkelde problemen te bedenken.<br> Je beschikt over de nodige sociale vaardigheden om samen met anderen te bedenken welk product het beste past bij de wensen van een bedrijf of instelling.<br> Met Software Engineering kan je aan de slag als bijvoorbeeld Software Engineer, Back-end developer, Front-end developer, Technical Designer of als Database Engineer. <br>Meer weten over Software Engineering? <a href="https://www.hsleiden.nl/informatica/opbouw-studie/software-engineering.html" target="_blank"><b>Klik hier!</b></a>'
+    if specialisatie == "fict":
+        return fict
+    elif specialisatie == "bdam":
+        return bdam
+    elif specialisatie == "iat":
+        return iat
+    elif specialisatie == "se":
+        return se
 
 if __name__ == "__main__":
     pp = pprint.PrettyPrinter()

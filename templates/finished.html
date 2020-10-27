@@ -18,14 +18,15 @@
             <h2 class="subtitle is-3">Jouw uitslag</h2>
             <p>
               We hebben je antwoorden goed bekeken.<br>
-              De specialisatie <b>Forensisch ICT</b> past het beste bij jou, op basis van jouw antwoorden.
+              De specialisatie <b>{{ eindspecialisatie }}</b> past het beste bij jou, op basis van jouw antwoorden.
             </p><br>
+            <p>{{ tekst | safe  }}</p><br>
             <p>
               Als je dat graag wilt kun je je antwoorden nog eens terug kijken of we kunnen deze naar je toe sturen per mail.
             </p>
             <br><br>
             <div class="has-text-centered" style="margin-top: -2em;">
-                <a href="{{ url_for('einde') }}" class="button is-success linkButton" id="indexStart">Antwoorden bekijken</a>
+                <a href="{{ url_for('overzicht') }}" class="button is-success linkButton" id="indexStart">Antwoorden bekijken</a>
                 <a href="{{ url_for('einde') }}" class="button is-success linkButton" id="indexStart">Verstuur mijn resultaten</a><br><br>
                 <a href="{{ url_for('home') }}" class="button is-danger is-small linkButton" id="indexStart">Verwijderen en verlaten</a>
             </div>
