@@ -46,7 +46,8 @@ def vraag():
             else:
                 return redirect(url_for("einde"))
         else:
-            return redirect(url_for("einde"))
+            user_session.clearSession(session)
+            return redirect(url_for("badrequest"))
 
     if request.values.get('a') == 'back':
         user_session.setHuidigeVraag(session, (current_question-1))
@@ -77,6 +78,20 @@ def getQuestionByID(id: int):
     for question in questions:
         if question.id == id:
             return question
+
+@app.route("/bad-request", methods=["GET"])
+def badrequest():
+    return render_template('errors/400.html'), 400
+
+@app.errorhandler(404)
+def page_not_found(e):
+    # note that we set the 404 status explicitly
+    return render_template('errors/404.html'), 404
+
+@app.errorhandler(400)
+def page_not_found(e):
+    # note that we set the 404 status explicitly
+    return render_template('errors/400.html'), 400
 
 if __name__ == "__main__":
     pp = pprint.PrettyPrinter()
