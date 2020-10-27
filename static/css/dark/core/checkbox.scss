@@ -1,0 +1,38 @@
+.answer-box{
+    background-color: hsl(113, 0%, 14%);
+    border-radius: 5px;
+    color: white;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.01), 0 3px 10px 0 rgba(0, 0, 0, 0.05);
+    padding: 1em;
+    margin: 1em;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.answer-box-filled{
+    background-color: hsl(125deg, 18%, 22%);
+    border-radius: 5px;
+    color: white;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.01), 0 3px 10px 0 rgba(0, 0, 0, 0.05);
+    padding: 1em;
+    margin: 1em;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.answer-box:hover{
+    background-color: hsl(113, 0%, 16%);
+}
+
+.answer-box-filled:hover{
+    background-color: hsl(125deg, 18%, 24%);
+}
+
+.answer-prefix {
+    background-color: hsl(263, 32%, 35%);
+    border-radius: 5px;
+    padding: .25em .5em;
+    font-size: 13px;
+    font-weight: bold;
+    margin-right: 1em;
+}

@@ -9,68 +9,46 @@ import mysql.connector
 app = Flask(__name__)
 app.secret_key = "HSL-SORTEERHOED-2020-$^&"
 
-@app.route("/sorteerhoed/", methods=["POST", "GET"])
+@app.route("/", methods=["GET"])
 def home():
-    if request.method == "POST" and "button" in request.form:
-        form = request.form
-        method = request.method
-
-        if form["button"] == "Beginnen":
-            return redirect(url_for("gegevens"))
+    if request.values.get('a') == 'start':
+        user_session.clearSession(session)
+        user_session.createSession(session, "Nope", "TEST123", "Tom@alt-del.nl")
+        return redirect(url_for("vraag"))
 
     return render_template('index.html')
 
-@app.route("/sorteerhoed/gegevens/", methods=["POST", "GET"])
-def gegevens():
-    if request.method == "POST" and "button" in request.form:
-        form = request.form
-        method = request.method
+@app.route("/einde", methods=["GET"])
+def einde():
+    return render_template('finished.html')
 
-        if form["button"] == "Vragenlijst starten":
-            user_session.clearSession(session)
-            user_session.createSession(session, form["username"], "TEST123", "Tom@alt-del.nl")
-            # user_session.createSession(session, form["username"], form["student_number"], form["mail_address"])
-            return redirect(url_for("vraag"))
-
-    return render_template('gegevens.html')
-
-@app.route("/sorteerhoed/vraag/", methods=["POST", "GET"])
+@app.route("/vraag", methods=["POST", "GET"])
 def vraag():
     if not user_session.hasSession(session):
         return redirect(url_for("home"))
 
     current_question = int(user_session.getHuidigeVraag(session))
+    back = getQuestionByID(current_question-1) is not None
+    next = getQuestionByID(int(current_question+1)) is not None
 
-    if request.method == "POST" and "button" in request.form:
-        form = request.form
-        method = request.method
+    if request.method == 'POST':
+        userAnswer = request.values.get('user-answer')
+        user_session.setAntwoord(session, current_question, int(userAnswer))
 
-        if "antwoord" in form:
-            user_session.setAntwoord(session, current_question, int(form["antwoord"]))
-            print(user_session.getAntwoorden(session))
-
-        if form["button"] == "Vorige vraag":
-            user_session.setHuidigeVraag(session, (current_question-1))
-            return redirect(url_for("vraag"))
-
-        if form["button"] == "Volgende vraag":
+        if next:
             user_session.setHuidigeVraag(session, (current_question+1))
             return redirect(url_for("vraag"))
+        else:
+            return redirect(url_for("einde"))
 
-        if form["button"] == "Overzicht":
-            user_session.setHuidigeVraag(session, 1)
-            return redirect(url_for("overzicht"))
+    if request.values.get('a') == 'back':
+        user_session.setHuidigeVraag(session, (current_question-1))
+        return redirect(url_for("vraag"))
 
-        if form["button"] == "Bevestigen":
-            user_session.setHuidigeVraag(session, 1)
-            return redirect(url_for("overzicht"))
-
-    back = getQuestionByID(int(current_question-1)) is not None
-    next = getQuestionByID(int(current_question+1)) is not None
     filled = user_session.getAntwoord(session, current_question)
     return render_template('vraag.html', question=getQuestionByID(current_question), back=back, next=next, filled=filled)
 
-@app.route("/sorteerhoed/overzicht/", methods=["POST", "GET"])
+@app.route("/overzicht", methods=["POST", "GET"])
 def overzicht():
     if not user_session.hasSession(session):
         return redirect(url_for("home"))
@@ -99,14 +77,17 @@ if __name__ == "__main__":
             "vraag": "Vraag 1?",
             "antwoorden": {
                 1: {
+                    "letter": "A",
                     "antwoord": "Antwoord 1",
                     "punten": {"FICT": 1, "SE": 1, "BDM": 1, "IAT": 1}
                 },
                 2: {
+                    "letter": "B",
                     "antwoord": "Antwoord 2",
                     "punten": {"FICT": 1, "SE": 1, "BDM": 1, "IAT": 1}
                 },
                 3: {
+                    "letter": "C",
                     "antwoord": "Antwoord 3",
                     "punten": {"FICT": 1, "SE": 1, "BDM": 1, "IAT": 1}
                 }
@@ -116,14 +97,17 @@ if __name__ == "__main__":
             "vraag": "Vraag 2?",
             "antwoorden": {
                 1: {
+                    "letter": "A",
                     "antwoord": "Antwoord 1",
                     "punten": {"FICT": 1, "SE": 1, "BDM": 1, "IAT": 1}
                 },
                 2: {
+                    "letter": "B",
                     "antwoord": "Antwoord 2",
                     "punten": {"FICT": 1, "SE": 1, "BDM": 1, "IAT": 1}
                 },
                 3: {
+                    "letter": "C",
                     "antwoord": "Antwoord 3",
                     "punten": {"FICT": 1, "SE": 1, "BDM": 1, "IAT": 1}
                 }
@@ -133,14 +117,17 @@ if __name__ == "__main__":
             "vraag": "Vraag 3?",
             "antwoorden": {
                 1: {
+                    "letter": "A",
                     "antwoord": "Antwoord 1",
                     "punten": {"FICT": 1, "SE": 1, "BDM": 1, "IAT": 1}
                 },
                 2: {
+                    "letter": "B",
                     "antwoord": "Antwoord 2",
                     "punten": {"FICT": 1, "SE": 1, "BDM": 1, "IAT": 1}
                 },
                 3: {
+                    "letter": "C",
                     "antwoord": "Antwoord 3",
                     "punten": {"FICT": 1, "SE": 1, "BDM": 1, "IAT": 1}
                 }
@@ -152,8 +139,9 @@ if __name__ == "__main__":
     for id in q:
         questions.append(Question(q, id))
 
-    conn1 = database.setup()
-    database.laad_vragen(conn1)
+    db_conn = database.setup()
+    vragen_dict = database.laad_vragen(db_conn)
+
     app.run(debug=True)
     # app.run(host='0.0.0.0', debug=True)
 

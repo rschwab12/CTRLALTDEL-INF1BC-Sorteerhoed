@@ -1,20 +1,17 @@
 import mysql.connector
 
 def setup():
-    
-
     mydb = mysql.connector.connect(
         host="51.195.90.173",
         user="sorteerhoed",
         password="wbN8Xw3&Fgt3F6!",
         database="sorteerhoed"
     )
-    
+
     return mydb
 
 
 def laad_vragen(conn):
-
     mycursor = conn.cursor(dictionary=True)
     try:
         mycursor.execute("SELECT * FROM questions")
@@ -57,14 +54,7 @@ def laad_vragen(conn):
 #        print('sorry but it looks like we cant fetch from the database')
  #       
   #  myresult = mycursor.fetchall()
-    
-    
-    
-    
-    
 
 def insert_vragenlijst(username, score):
     # score = {fict=0, bdam=3} etc
     return
-
-# etc etc
