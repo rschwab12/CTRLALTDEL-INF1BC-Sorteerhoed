@@ -77,7 +77,6 @@ if __name__ == "__main__":
     db_conn = database.setup()
     vragen_dict = database.set_ans(db_conn, database.laad_vragen(db_conn)) 
     questions = []
-    pp.pprint(vragen_dict)
     for id in vragen_dict:
         questions.append(Question(vragen_dict, id))
     app.run(debug=True)
