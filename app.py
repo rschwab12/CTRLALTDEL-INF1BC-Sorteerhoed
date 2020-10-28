@@ -94,7 +94,10 @@ def vraag():
                 return redirect(url_for("vraag"))
             else:
                 user_session.setHuidigeVraag(session, current_question)
-                return redirect(url_for("einde"))
+                if len(user_session.getIngevuldeAntwoorden(session)) >= len(questions):
+                    return redirect(url_for("einde"))
+                else:
+                    return redirect(url_for("overzicht"))
         else:
             user_session.clearSession(session)
             return redirect(url_for("badrequest"))
