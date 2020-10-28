@@ -104,7 +104,8 @@ def vraag():
         return redirect(url_for("vraag"))
 
     filled = user_session.getAntwoord(session, current_question)
-    return render_template('vraag.html', question=getQuestionByID(current_question), back=back, next=next, filled=filled, csrfToken=user_session.setCSRFToken(session))
+    progress = (100 / len(questions)) * len(user_session.getAntwoorden(session))
+    return render_template('vraag.html', question=getQuestionByID(current_question), back=back, next=next, filled=filled, progress=progress, csrfToken=user_session.setCSRFToken(session))
 
 @app.route("/overzicht", methods=["POST", "GET"])
 def overzicht():
