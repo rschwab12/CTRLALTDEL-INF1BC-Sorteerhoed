@@ -8,6 +8,8 @@ import mysql.connector
 import pprint
 import string
 import random
+import plotly.express as px
+import pandas as pd
 
 app = Flask(__name__)
 app.secret_key = "HSL-SORTEERHOED-2020-$^&"
@@ -26,6 +28,10 @@ def einde():
     eindantwoorden = user_session.getAntwoorden(session)
     punten = {'fict': 0, 'bdam': 0, 'iat': 0, 'se': 0}
 
+    # Hoeveel punten je per specialisatie kan krijgen
+    puntenperspec = {'fict': 19, 'bdam': 15, 'iat': 22, 'se': 16}
+
+    # Voor elk antwoord de bijbehorende punten optellen
     for vraag in eindantwoorden:
         antwoorden = database.get_punten_voor_spec(vraag, eindantwoorden[vraag], db_conn)
         for specialisatie in antwoorden:
@@ -33,13 +39,36 @@ def einde():
             punten['bdam'] += specialisatie['bdam']
             punten['iat'] += specialisatie['iat']
             punten['se'] += specialisatie['se']
-        #print(f"Vraag {vraag}: antwoord {eindantwoorden[vraag]}")
+        
+    # Op basis van punten de beste spec berekeken
+    # TEMP kan eigenlijk weg, we doen het nu met procenten
+    max_key = max(punten, key=punten.get)
+    print(f"Beste optie: {max_key} volgens absolute aantal punten: {punten}")
+
+    # Procentuele keuze berekenen, delen door max haalbare punten
+    for spec in punten:
+        punten[spec]
+        punten[spec] = punten[spec] / puntenperspec[spec] * 100
+
+        # Afronden op 2 decimalen
+        punten[spec] = round(punten[spec], 2)
 
     max_key = max(punten, key=punten.get)
-    # DEBUG logs
-    print(f"Punten: {punten}")
-    print(f"Beste optie: {max_key}")
+    print(f"Beste optie: {max_key} volgens procentuele aantal punten: {punten}")
 
+    # Kijken of er meerdere specialisaties gelijk zijn
+    maxpunt = punten[max_key]
+    maxspecs = []
+    for spec in punten:
+        if punten[spec] == maxpunt:
+            maxspecs.append(spec)
+    if len(maxspecs) > 1:
+        print(f"Let op! Meerdere specialisaties gelijk aantal punten: {maxspecs}")
+
+    # Staafdiagram maken
+    #graph(punten)
+
+    # Doorgeven aan html welke specialisatie gekozen is
     if max_key == "fict":
         eindspecialisatie = "Forensisch ICT"
     elif max_key == "bdam":
@@ -48,8 +77,18 @@ def einde():
         eindspecialisatie = "Interactie Technologie"
     elif max_key == "se":
         eindspecialisatie = "Software Engineering"
-
+    
     return render_template('finished.html', eindspecialisatie=eindspecialisatie, tekst=get_promotekst(max_key))
+
+def graph(punten):
+    # Staafdiagram maken
+    data = pd.DataFrame({'Specialisatie': ['FICT', 'BDAM', 'IAT', 'SE'], 'antwoorden': [punten['fict'], punten['bdam'], punten['iat'], punten['se']]})
+    fig = px.bar(data, x='Specialisatie', y='antwoorden', labels={'antwoorden':'Past bij jou (%)'}, range_y=[0,100])
+    fig.show()
+
+    # Maakt er een svg van
+    fig.write_image("graph.svg")
+
 
 @app.route("/vraag", methods=["POST", "GET"])
 def vraag():
@@ -121,10 +160,10 @@ def page_not_found(e):
 
 def get_promotekst(specialisatie):
     # Sorry, beetje rommelig dit... maar het werkt :)
-    fict = 'Jij bent analytisch, doelgericht en vasthoudend. Je houdt van rechercheren en onderzoeken en voelt je verantwoordelijk voor het bevorderen van een veilige maatschappij en het verminderen van criminaliteit. Je bent innovatief en nieuwsgierig naar de nieuwste technologieën en de mogelijkheden die ze bieden.<br> Je kunt goed omgaan met mensen en weet ze naar waarde in te schatten. Je hebt er plezier in om slimme wegen te vinden die leiden naar oplossingen voor ingewikkelde zaken.<br> Met Forensisch ICT heb je carrièrekansen bij politie, justitie, defensie maar ook in de particuliere markt! <br>Meer weten over Forensisch ICT? <a href="https://www.hsleiden.nl/informatica/opbouw-studie/forensisch-ict.html" target="_blank"><b>Klik hier!</b></a>'
-    bdam = 'Jij bent nieuwsgierig en analytisch ingesteld. Je bent niet bang om veel met data te werken, sterker nog, jij haalt hier je plezier uit! Je bent een data-tovenaar, van modelleren tot analyseren en adviseren, met data krijg jij alles voor elkaar. Je vindt het leuk om onderzoek te doen en gaat werken met Artificial Intelligence.<br> Jouw kennis en vaardigheden helpen bedrijven te verbeteren en optimaliseren.<br> Met Business Data Management kan je bijvoorbeeld aan de slag als data-analist of als Business Intelligence consultant. <br>Meer weten over Business Data Management? <a href="https://www.hsleiden.nl/informatica/opbouw-studie/business-data-management.html" target="_blank"><b>Klik hier!</b></a>'
-    iat = 'Jij bent creatief en hebt geen vrees voor technologie. Je bent nieuwsgierig naar de nieuwste ontwikkelingen in technologie, social media en mogelijkheden van gebruikersinteractie.<br> Je bent kritisch en kan je goed verplaatsen in gebruikers.<br> Je kunt goed luisteren naar de wensen en belangen van verschillende partijen en samenwerken in multidisciplinaire teams.<br> Met Interactie Technologie kan je aan de slag als bijvoorbeeld Interaction designer of als Desktoppublisher.<br>Meer weten over Interactie Technologie? <a href="https://www.hsleiden.nl/informatica/opbouw-studie/interactie-technologie.html" target="_blank"><b>Klik hier!</b></a>'
-    se = 'Jij hebt een sterk analytisch vermogen. Je bent creatief en ontwerpt en programmeert graag. Je hebt er plezier in om slimme oplossingen voor ingewikkelde problemen te bedenken.<br> Je beschikt over de nodige sociale vaardigheden om samen met anderen te bedenken welk product het beste past bij de wensen van een bedrijf of instelling.<br> Met Software Engineering kan je aan de slag als bijvoorbeeld Software Engineer, Back-end developer, Front-end developer, Technical Designer of als Database Engineer. <br>Meer weten over Software Engineering? <a href="https://www.hsleiden.nl/informatica/opbouw-studie/software-engineering.html" target="_blank"><b>Klik hier!</b></a>'
+    fict = 'Jij bent analytisch, doelgericht en vasthoudend. Je houdt van rechercheren en onderzoeken en voelt je verantwoordelijk voor het bevorderen van een veilige maatschappij en het verminderen van criminaliteit. Je bent innovatief en nieuwsgierig naar de nieuwste technologieën en de mogelijkheden die ze bieden.<br> Je kunt goed omgaan met mensen en weet ze naar waarde in te schatten. Je hebt er plezier in om slimme wegen te vinden die leiden naar oplossingen voor ingewikkelde zaken.<br> Met Forensisch ICT heb je carrièrekansen bij politie, justitie, defensie maar ook in de particuliere markt! <br><br>Meer weten over Forensisch ICT? <a href="https://www.hsleiden.nl/informatica/opbouw-studie/forensisch-ict.html" target="_blank"><b>Klik hier!</b></a>'
+    bdam = 'Jij bent nieuwsgierig en analytisch ingesteld. Je bent niet bang om veel met data te werken, sterker nog, jij haalt hier je plezier uit! Je bent een data-tovenaar, van modelleren tot analyseren en adviseren, met data krijg jij alles voor elkaar. Je vindt het leuk om onderzoek te doen en gaat werken met Artificial Intelligence.<br> Jouw kennis en vaardigheden helpen bedrijven te verbeteren en optimaliseren.<br> Met Business Data Management kan je bijvoorbeeld aan de slag als data-analist of als Business Intelligence consultant. <br><br>Meer weten over Business Data Management? <a href="https://www.hsleiden.nl/informatica/opbouw-studie/business-data-management.html" target="_blank"><b>Klik hier!</b></a>'
+    iat = 'Jij bent creatief en hebt geen vrees voor technologie. Je bent nieuwsgierig naar de nieuwste ontwikkelingen in technologie, social media en mogelijkheden van gebruikersinteractie.<br> Je bent kritisch en kan je goed verplaatsen in gebruikers.<br> Je kunt goed luisteren naar de wensen en belangen van verschillende partijen en samenwerken in multidisciplinaire teams.<br> Met Interactie Technologie kan je aan de slag als bijvoorbeeld Interaction designer of als Desktoppublisher.<br><br>Meer weten over Interactie Technologie? <a href="https://www.hsleiden.nl/informatica/opbouw-studie/interactie-technologie.html" target="_blank"><b>Klik hier!</b></a>'
+    se = 'Jij hebt een sterk analytisch vermogen. Je bent creatief en ontwerpt en programmeert graag. Je hebt er plezier in om slimme oplossingen voor ingewikkelde problemen te bedenken.<br> Je beschikt over de nodige sociale vaardigheden om samen met anderen te bedenken welk product het beste past bij de wensen van een bedrijf of instelling.<br> Met Software Engineering kan je aan de slag als bijvoorbeeld Software Engineer, Back-end developer, Front-end developer, Technical Designer of als Database Engineer. <br><br>Meer weten over Software Engineering? <a href="https://www.hsleiden.nl/informatica/opbouw-studie/software-engineering.html" target="_blank"><b>Klik hier!</b></a>'
     if specialisatie == "fict":
         return fict
     elif specialisatie == "bdam":
