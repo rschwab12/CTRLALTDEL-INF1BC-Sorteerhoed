@@ -21,3 +21,14 @@ class Question:
 
     def getAntwoorden(self):
         return list(self.antwoorden)
+
+    def getAntwoordByID(self, id: int):
+        for antwoord in self.antwoorden:
+            if antwoord.getID() == id:
+                return antwoord
+
+    def getPunten(self, specialisatie):
+        points = 0;
+        for antwoord in self.antwoorden:
+            points += antwoord.getPunten(specialisatie)
+        return points
