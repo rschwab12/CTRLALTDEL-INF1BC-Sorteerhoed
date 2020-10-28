@@ -49,7 +49,7 @@ def set_ans(conn, Base): #supposed to run with laad_vragen()
 
 
     for Instance in Questions:
-        Query = "SELECT * FROM answers WHERE questionId=" + str(Instance) + " ORDER BY answerId"
+        Query = "SELECT * FROM answers WHERE questionId=" + str(Instance) + " ORDER BY position"
         try:
             mycursor.execute(Query) #Try emptying the database again
         except:
