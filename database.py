@@ -1,12 +1,37 @@
 import mysql.connector
 
 def setup():
+    
+    Connect = {} #this will store the connect data in a minute
+    try:
+        Config = open('Config.cfg', 'r')   #open the cfg file and store it in Raw
+        Raw = Config.read()
+    except:
+        print('there was an error trying to open the config file.')
+    Temp = '' #temp string to store the chars in while itterating
+    Y = 0 #this will count the resets to assign the right variables in the dict
+    for X in Raw:
+        if X != ';':
+            Temp += X
+        else:
+            Connect.update({Y:Temp})
+            Temp = ''
+            Y += 1
+    Config.close()
+    
     mydb = mysql.connector.connect(
-        host="51.195.90.173",
-        user="sorteerhoed",
-        password="wbN8Xw3&Fgt3F6!",
-        database="sorteerhoed"
+        host=Connect[0],
+        user=Connect[1],
+        password=Connect[2],
+        database=Connect[3]
     )
+    
+    #mydb = mysql.connector.connect(
+    #    host="51.195.90.173",
+    #    user="sorteerhoed",
+    #    password="wbN8Xw3&Fgt3F6!",
+    #    database="sorteerhoed"
+    #)
 
     return mydb
 
