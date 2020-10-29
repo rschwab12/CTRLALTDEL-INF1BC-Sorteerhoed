@@ -14,7 +14,7 @@
   <div id="question-body" class="animate__animated animate__fadeIn">
     <div class="container" style="max-width: 500px; margin-top: 12.5%;">
       <div class="has-text-centered">
-        <h2 class="subtitle is-3">{{ question.getVraag() }}</h2>
+        <h2 class="subtitle is-4">{{ question.getID() }}. {{ question.getVraag() }}</h2>
       </div>
       &nbsp;
       <div class="has-text-centered">
@@ -26,6 +26,7 @@
             </div>
           </div>
         {%endfor%}
+        <progress class="progress is-success" value="{{ progress }}" max="100">{{ progress }}%</progress>
         {% if back %}
         <a class="button is-danger" href="{{ url_for('vraag', a='back') }}"><i class="fas fa-arrow-left"></i>&nbsp;Vorige
           vraag</a>

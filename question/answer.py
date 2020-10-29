@@ -13,8 +13,11 @@ class Answer:
     def getTekst(self):
         return self.antwoord
 
+    def getPuntenDict(self):
+        return self.punten
+
     def getPunten(self, specialisatie):
         return self.punten[specialisatie]
 
     def getLetter(self):
-        return self.letter
+        return (self.letter).upper()

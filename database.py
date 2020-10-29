@@ -22,34 +22,34 @@ def laad_vragen(conn):
 
     Questions = {}
     Rotation = 0
-    
-    
+
+
     for row in myresult:
         Rotation += 1
         try:
-            Questions.update({Rotation:{ 
-                                "vraag":row['text'], 
-                                "antwoorden": {}}}) 
+            Questions.update({Rotation:{
+                                "vraag":row['text'],
+                                "antwoorden": {}}})
         except:
-            Questions.update({Rotation:{ 
-                                "vraag":'CantFetch', 
-                                "antwoorden": {}}}) 
+            Questions.update({Rotation:{
+                                "vraag":'CantFetch',
+                                "antwoorden": {}}})
 
-    return Questions    
-    
-    
+    return Questions
+
+
 def set_ans(conn, Base): #supposed to run with laad_vragen()
     try:
         Questions = dict(Base)
     except:
         print('looks like we didnt recieve a correct variable chief')
-     
+
     mycursor = conn.cursor(dictionary=True)
-    
-    
-    
+
+
+
     for Instance in Questions:
-        Query = "SELECT * FROM answers WHERE questionId=" + str(Instance) + " ORDER BY answerId"
+        Query = "SELECT * FROM answers WHERE questionId=" + str(Instance) + " ORDER BY position"
         try:
             mycursor.execute(Query) #Try emptying the database again
         except:
@@ -59,11 +59,11 @@ def set_ans(conn, Base): #supposed to run with laad_vragen()
             for Var2 in myresult:
                 pos = int(Var2['position'])
                 Letter = chr(pos + 96)
-                
-                
-                Questions[Instance]['antwoorden'].update({pos: {'letter':Letter, 'antwoord':Var2['text'], 'punten': {'FICT': Var2['fict'], 'SE': Var2['se'], 'BDM': Var2['bdam'], 'IAT': Var2['iat']}}}) 
-                
-                
+
+
+                Questions[Instance]['antwoorden'].update({pos: {'letter':Letter, 'antwoord':Var2['text'], 'punten': {'FICT': Var2['fict'], 'SE': Var2['se'], 'BDM': Var2['bdam'], 'IAT': Var2['iat']}}})
+
+
         except Exception as a:
             print('het werkte niet...')
             print(a)
