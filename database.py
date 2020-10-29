@@ -1,11 +1,16 @@
 import mysql.connector
 
 def setup():
+    import configparser
+    config = configparser.ConfigParser()
+    config.read("config.ini")
+
     mydb = mysql.connector.connect(
-        host="51.195.90.173",
-        user="sorteerhoed",
-        password="wbN8Xw3&Fgt3F6!",
-        database="sorteerhoed"
+        host=config.get('MYSQL', 'host'),
+        port=config.get('MYSQL', 'port'),
+        user=config.get('MYSQL', 'username'),
+        password=config.get('MYSQL', 'password'),
+        database=config.get('MYSQL', 'database')
     )
 
     return mydb
