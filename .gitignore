@@ -1,4 +1,6 @@
 **/*.iml
+**/config.ini
+
 .idea/
 __pycache__/
 target/
