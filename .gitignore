@@ -1,8 +1,7 @@
 **/*.iml
-**/config.ini
-
 .idea/
 __pycache__/
 target/
 config.codekit3
 .DS_Store
+config.ini
