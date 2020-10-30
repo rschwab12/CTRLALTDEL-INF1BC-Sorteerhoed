@@ -20,11 +20,11 @@
 
     <form method="post">
       <div class="columns is-multiline is-centered">
-        <div class="column is-5">
+        <div class="column">
           <div class="columns is-multiline is-centered">
             {% for question in questions %}
               {% if question.getID() in filled %}
-                <div class="column">
+                <div class="column is-one-quarter">
                   <input class="button is-success" type="submit" name="button" value="{{ question.getID() }}">
                 </div>
               {% else %}
