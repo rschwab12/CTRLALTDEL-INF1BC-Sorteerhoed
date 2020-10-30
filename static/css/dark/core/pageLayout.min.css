@@ -1,1 +1,1 @@
-body{overflow:hidden}.is-vertical-center{display:flex;align-items:center;height:100%;margin-top:-3.25rem}@media screen and (max-width: 992px){.is-vertical-center{display:block;margin-top:12.5%}body{overflow:visible}}
+body{overflow:hidden}.is-vertical-center{display:flex;align-items:center;height:100%}@media screen and (max-width: 992px){.is-vertical-center{display:block;margin-top:12.5%}body{overflow:visible}}
