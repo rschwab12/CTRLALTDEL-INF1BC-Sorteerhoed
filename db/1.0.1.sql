@@ -1,2 +1,0 @@
-ALTER TABLE `answers` ADD `weight` FLOAT(11) NOT NULL AFTER `specialisationId`; 
-INSERT INTO `db_versions` (`id`, `version`, `creator`, `created`) VALUES (NULL, '1.0.1', 'Rico Schwab', CURRENT_TIMESTAMP);
