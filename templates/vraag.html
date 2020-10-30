@@ -37,13 +37,21 @@
       </div>
       <br>
       <div class="has-text-centered">
-        {% if not next %}
-        Dit is de laatste vraag.<br>Wanneer je een antwoord kiest zie je je resultaten en kun je jouw antwoorden niet
-        meer aanpassen.
+        {% if ready is true %}
+          <div class="notification is-info">
+            Dit is de laatste vraag.<br>Wanneer je deze vraag beantwoord beëindig je de vragenlijst en kun je niet meer terug om je antwoorden aan te passen.
+          </div>
         {%endif%}
+        {% if not next and answerCount < 19 %}
+        <div class="notification is-danger">
+          Je hebt nog niet alle vragen beantwoord.<br>Na het kiezen van een antwoord wordt je doorverwezen naar de overzichtpagina.
+        </div>
+        {%endif%}
+
       </div>
     </div>
   </div>
+  {{count}}
   <script src="{{ url_for('static', filename='js/answerFormHandler.min.js') }}"></script>
   <form id="answer-form" method="POST">
     <input type="hidden" name="csrf-token" value={{csrfToken}}>
