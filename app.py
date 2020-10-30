@@ -149,7 +149,7 @@ def page_not_found(e):
     return render_template('errors/404.html'), 404
 
 @app.errorhandler(400)
-def page_not_found(e):
+def bad_request(e):
     # note that we set the 404 status explicitly
     return render_template('errors/400.html'), 400
 

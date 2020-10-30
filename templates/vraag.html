@@ -19,7 +19,7 @@
       &nbsp;
       <div class="has-text-centered">
         {% for antwoord in question.getAntwoorden() %}
-        {% set answer_class = "answer-box-filled" if (filled > 0 and antwoord.getID() == filled) else "answer-box" %}
+        {% set answer_class = "answer-box filled" if (filled > 0 and antwoord.getID() == filled) else "answer-box" %}
         <div class="{{ answer_class }}" id="answer-option-{{ antwoord.getID() }}" data-answer="{{ antwoord.getID() }}">
           <div class="has-text-left">
             <span class="answer-prefix">{{ antwoord.getLetter() }}</span>{{ antwoord.getTekst() }}
