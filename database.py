@@ -1,10 +1,12 @@
 import mysql.connector
+import os
 
 def setup():
     import configparser
-    config = configparser.ConfigParser()
-    config.read("config.ini")
-
+    folder = os.path.dirname(os.path.abspath(__file__))
+    configfile = os.path.join(folder, 'config.ini')
+    config = configparser.RawConfigParser()
+    config.read(configfile)
     mydb = mysql.connector.connect(
         host=config.get('MYSQL', 'host'),
         port=config.get('MYSQL', 'port'),
