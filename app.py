@@ -84,6 +84,12 @@ def vraag():
     back = getQuestionByID(current_question-1) is not None
     next = getQuestionByID(int(current_question+1)) is not None
 
+    filledAnswers = len(user_session.getAnswerList(session))
+
+    finishable = False
+    if filledAnswers > 18 and not next:
+        finishable = True
+
     if request.method == 'POST':
         if request.values.get('csrf-token') == user_session.getCSRFToken(session):
             userAnswer = request.values.get('user-answer')
@@ -94,7 +100,7 @@ def vraag():
                 return redirect(url_for("vraag"))
             else:
                 user_session.setHuidigeVraag(session, current_question)
-                if len(user_session.getIngevuldeAntwoorden(session)) >= len(questions):
+                if finishable == True:
                     return redirect(url_for("einde"))
                 else:
                     return redirect(url_for("overzicht"))
@@ -105,10 +111,10 @@ def vraag():
     if request.values.get('a') == 'back':
         user_session.setHuidigeVraag(session, (current_question-1))
         return redirect(url_for("vraag"))
-
     filled = user_session.getAntwoord(session, current_question)
+
     progress = (100 / len(questions)) * len(user_session.getAntwoorden(session))
-    return render_template('vraag.html', question=getQuestionByID(current_question), back=back, next=next, filled=filled, progress=progress, csrfToken=user_session.setCSRFToken(session))
+    return render_template('vraag.html', question=getQuestionByID(current_question), back=back, next=next, filled=filled, progress=progress, csrfToken=user_session.setCSRFToken(session), ready=finishable, answerCount=filledAnswers)
 
 @app.route("/overzicht", methods=["POST", "GET"])
 def overzicht():
@@ -149,7 +155,7 @@ def page_not_found(e):
     return render_template('errors/404.html'), 404
 
 @app.errorhandler(400)
-def page_not_found(e):
+def bad_request(e):
     # note that we set the 404 status explicitly
     return render_template('errors/400.html'), 400
 

@@ -8,16 +8,8 @@
     cursor: pointer;
     font-weight: bold;
 }
-
-.answer-box-filled{
+.filled{
     background-color: hsl(125deg, 18%, 22%);
-    border-radius: 5px;
-    color: white;
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.01), 0 3px 10px 0 rgba(0, 0, 0, 0.05);
-    padding: 1em;
-    margin: 1em;
-    cursor: pointer;
-    font-weight: bold;
 }
 
 .answer-box:hover{

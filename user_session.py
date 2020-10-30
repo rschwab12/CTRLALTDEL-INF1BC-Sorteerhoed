@@ -51,6 +51,9 @@ def getAntwoord(session, vraag_id: int):
     if not isIngevuld(session, vraag_id): return 0
     return session["antwoorden"][str(vraag_id)]
 
+def getAnswerList(session):
+    return session["antwoorden"]
+    
 def isIngevuld(session, vraag_id: int):
     return str(vraag_id) in session["antwoorden"]
 
