@@ -12,15 +12,20 @@
   <div class="container is-vertical-center" style="max-width: 65%;">
     <div class="columns is-vcentered">
       <div class="column">
+
+        <!-- Final result -->
         <h2 class="subtitle is-3">Jouw uitslag</h2>
         <p>
           We hebben je antwoorden goed bekeken.<br> 
           De specialisatie <b>{{ eindspecialisatie }}</b> past het beste bij jou, op basis van jouw antwoorden.
         </p><br>
+
+        <!-- Promotion text, safe -> making sure the html in the text works -->
         <p>{{ tekst | safe  }}</p><br>
         <br><br>
+
+        <!-- Button for leaving and resetting -->
         <div class="has-text-centered" style="margin-top: -2em;">
-          
           <a href="{{ url_for('home') }}" class="button is-danger linkButton" id="indexStart">Verwijderen en
             verlaten</a>
         </div>

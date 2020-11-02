@@ -20,6 +20,8 @@
       <div class="columns is-multiline is-centered">
         <div class="column">
           <div class="columns is-multiline is-centered">
+
+            <!-- Retrieving each question, and checking if it has been answered to determine color of the button -->
             {% for question in questions %}
               {% if question.getID() in filled %}
                 <div class="column is-one-quarter">
@@ -36,6 +38,8 @@
       </div>
     </form>
     <br><br><br>
+
+    <!-- Only if every question has been answered, the user can go to the final page -->
     {% if questions|length == filled|length %}
       <div class="field is-grouped is-grouped-centered">
         <p class="control">

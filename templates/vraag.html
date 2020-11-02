@@ -13,11 +13,15 @@
 <body>
   <div id="question-body" class="is-vertical-center has-text-centered animate__animated animate__fadeIn">
     <div class="container" style="display: block; max-width: 60%">
+
+      <!-- Showing the question -->
       <div class="has-text-centered">
         <h2 class="subtitle is-4">{{ question.getID() }}. {{ question.getVraag() }}</h2>
       </div>
       &nbsp;
       <div class="has-text-centered">
+
+        <!-- Showing the possible answers -->
         {% for antwoord in question.getAntwoorden() %}
         {% set answer_class = "answer-box filled" if (filled > 0 and antwoord.getID() == filled) else "answer-box" %}
         <div class="{{ answer_class }}" id="answer-option-{{ antwoord.getID() }}" data-answer="{{ antwoord.getID() }}">
@@ -26,6 +30,8 @@
           </div>
         </div>
         {%endfor%}
+
+        <!-- Progressbar -->
         <progress class="progress is-success" value="{{ progress }}" max="100">{{ progress }}%</progress>
         {% if back %}
         <a class="button is-danger" href="{{ url_for('vraag', a='back') }}"><i
@@ -33,11 +39,14 @@
           vraag</a>
         {%endif%}
         &nbsp;
+
+        <!-- Button to go to the overview -->
         <a class="button is-info" href="{{ url_for('overzicht') }}"><i class="fas fa-list"></i>&nbsp;Overzicht</a>
       </div>
       <br>
       <div class="has-text-centered">
         {% if ready == 'True' %}
+        <!-- Showing notification to let user know this is the final question -->
           <div class="notification is-info">
             Dit is de laatste vraag.<br>Wanneer je deze vraag beantwoord beëindig je de vragenlijst en kun je niet meer terug om je antwoorden aan te passen.
           </div>

@@ -3,6 +3,8 @@ import os
 
 def setup():
     import configparser
+
+    # Setting up the connection with database
     folder = os.path.dirname(os.path.abspath(__file__))
     configfile = os.path.join(folder, 'config.ini')
     config = configparser.RawConfigParser()
@@ -19,11 +21,12 @@ def setup():
 
 
 def laad_vragen(conn):
+    # Loading questions from the database
     mycursor = conn.cursor(dictionary=True)
     try:
         mycursor.execute("SELECT * FROM questions")
     except:
-        print('sorry but it looks like we cant fetch from the database')
+        print('Unable to fetch from the database')
 
     myresult = mycursor.fetchall()
 
@@ -46,10 +49,11 @@ def laad_vragen(conn):
 
 
 def set_ans(conn, Base): #supposed to run with laad_vragen()
+
     try:
         Questions = dict(Base)
     except:
-        print('looks like we didnt recieve a correct variable chief')
+        print('Looks like we didnt recieve a correct variable chief')
 
     mycursor = conn.cursor(dictionary=True)
 
@@ -75,18 +79,3 @@ def set_ans(conn, Base): #supposed to run with laad_vragen()
             print('het werkte niet...')
             print(a)
     return Questions
-
-def insert_vragenlijst(username, score):
-    # score = {fict=0, bdam=3} etc
-    return
-
-def get_punten_voor_spec(vraag, antwoord, conn):
-    mycursor = conn.cursor(dictionary=True)
-    #Query = f"SELECT `fict`,`iat`,`bdam`,`se` FROM answers WHERE `questionId` = 2 AND `position` = 2"
-    Query = f"SELECT `fict`,`iat`,`bdam`,`se` FROM answers WHERE `questionId` = {vraag} AND `position` = {antwoord}"
-    try:
-        mycursor.execute(Query)
-    except:
-        print('sorry but it looks like we cant fetch from the database')
-    myresult = mycursor.fetchall()
-    return myresult
