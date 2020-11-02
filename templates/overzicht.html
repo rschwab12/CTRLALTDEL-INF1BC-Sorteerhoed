@@ -1,52 +1,52 @@
 <html>
+
 <head>
   <title>Sorteerhoed</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/main.min.css') }}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
   <script src="https://kit.fontawesome.com/3648ee0da4.js" crossorigin="anonymous"></script>
-  <script
-  src="https://code.jquery.com/jquery-3.5.1.min.js"
-  integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
-  crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+    integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 </head>
 
 <body class="animate__animated animate__fadeIn">
-  <div class="container" style="max-width: 65%; margin-top: 12.5%;">
-    <div class="columns is-vcentered is-centered">
-      <h2 class="subtitle is-3">Overzicht</h2>
-    </div>
-    <form method="post">
-      <div class="columns is-multiline is-centered">
-        <div class="column">
-          <div class="columns is-multiline is-centered">
-
-            <!-- Retrieving each question, and checking if it has been answered to determine color of the button -->
-            {% for question in questions %}
-              {% if question.getID() in filled %}
-                <div class="column is-one-quarter">
-                  <input class="button is-success" type="submit" name="button" value="{{ question.getID() }}">
-                </div>
-              {% else %}
-                <div class="column">
-                  <input class="button is-danger" type="submit" name="button" value="{{ question.getID() }}">
-                </div>
-              {%endif%}
-            {%endfor%}
-          </div>
-        </div>
-      </div>
-    </form>
-    <br><br><br>
-
-    <!-- Only if every question has been answered, the user can go to the final page -->
-    {% if questions|length == filled|length %}
-      <div class="field is-grouped is-grouped-centered">
-        <p class="control">
-          <a class="button is-primary" href="{{ url_for('einde') }}">Resultaat berekenen</a>
+  <div class="container is-vertical-center">
+    <div style="margin: 0 auto; text-align: center;">
+      <div style="margin-bottom: 2em;">
+        <h1 class="subtitle is-3">Overzicht</h1>
+        <p>
+          Klik op het vraagnummer om deze opnieuw te bekijken en indien nodig je antwoord aan te passen.
         </p>
       </div>
-    {%endif%}
+      <div>
+        <!-- Retrieving each question, and checking if it has been answered to determine color of the button -->
+        {% for question in questions %}
+        {% if question.getID() in filled %}
+        <span>
+          <input class="button is-success" type="submit" name="button" value="{{ question.getID() }}">
+        </span>
+        {% else %}
+        <div style="display: inline-block; margin: .25em;">
+          <input class="button is-danger" type="submit" name="button" value="{{ question.getID() }}">
+        </div>
+        {%endif%}
+        {%endfor%}
+      </div>
+    </div>
   </div>
+
+
+
+
+  <!-- Only if every question has been answered, the user can go to the final page -->
+  {% if questions|length == filled|length %}
+  <div class="field is-grouped is-grouped-centered">
+    <p class="control">
+      <a class="button is-primary" href="{{ url_for('einde') }}">Resultaat berekenen</a>
+    </p>
+  </div>
+  {%endif%}
 </body>
+
 </html>
