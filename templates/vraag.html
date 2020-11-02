@@ -47,13 +47,15 @@
       <div class="has-text-centered">
         {% if ready == 'True' %}
         <!-- Showing notification to let user know this is the final question -->
-          <div class="notification is-info">
-            Dit is de laatste vraag.<br>Wanneer je deze vraag beantwoord beëindig je de vragenlijst en kun je niet meer terug om je antwoorden aan te passen.
-          </div>
+        <div class="notification is-info">
+          Dit is de laatste vraag.<br>Wanneer je deze vraag beantwoord beëindig je de vragenlijst en kun je niet meer
+          terug om je antwoorden aan te passen.
+        </div>
         {%endif%}
         {% if not next and answerCount < 19 %}
         <div class="notification is-danger">
-          Je hebt nog niet alle vragen beantwoord.<br>Na het kiezen van een antwoord wordt je doorverwezen naar de overzichtpagina.
+          Je hebt nog niet alle vragen beantwoord.<br>Na het kiezen van een antwoord wordt je doorverwezen naar de
+          overzichtpagina.
         </div>
         {%endif%}
 
