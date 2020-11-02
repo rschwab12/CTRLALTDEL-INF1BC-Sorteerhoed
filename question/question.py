@@ -28,7 +28,7 @@ class Question:
                 return antwoord
 
     def getPunten(self, specialisatie):
-        points = 0;
+        points = 0
         for antwoord in self.antwoorden:
             points += antwoord.getPunten(specialisatie)
         return points

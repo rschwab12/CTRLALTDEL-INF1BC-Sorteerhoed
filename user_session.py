@@ -4,39 +4,16 @@ import random
 def hasSession(session):
     return "huidige_vraag" in session
 
-def createSession(session, name, student, mail):
+def createSession(session):
     clearSession(session)
-    # session["username"] = name
-    # session["student_number"] = student
-    # session["mail_address"] = mail
     session["huidige_vraag"] = 1
     session["antwoorden"] = {}
 
 def clearSession(session):
     if hasSession(session):
-        # session.pop("username", None)
-        # session.pop("student_number", None)
-        # session.pop("email_address", None)
         session.pop("huidige_vraag", None)
         session.pop("antwoorden", None)
 
-# def getUsername(session):
-#     return session["username"]
-#
-# def setUsername(session, naam):
-#     session["username"] = naam
-#
-# def getStudentNumber(session):
-#     return session["student_number"]
-#
-# def setStudentNumber(session, naam):
-#     session["student_number"] = naam
-#
-# def getEmailAddress(session):
-#     return session["email_address"]
-#
-# def setEmailAddress(session, naam):
-#     session["email_address"] = naam
 
 def getHuidigeVraag(session):
     return session["huidige_vraag"]
