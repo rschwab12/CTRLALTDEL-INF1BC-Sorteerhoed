@@ -18,14 +18,9 @@
           De specialisatie <b>{{ eindspecialisatie }}</b> past het beste bij jou, op basis van jouw antwoorden.
         </p><br>
         <p>{{ tekst | safe  }}</p><br>
-        <p>
-          Als je dat graag wilt kun je je antwoorden nog eens terug kijken of we kunnen deze naar je toe sturen per
-          mail.
-        </p>
         <br><br>
         <div class="has-text-centered" style="margin-top: -2em;">
-          <a href="{{ url_for('einde') }}" class="button is-success linkButton" id="indexStart">Verstuur mijn
-            resultaten</a>
+          
           <a href="{{ url_for('home') }}" class="button is-danger linkButton" id="indexStart">Verwijderen en
             verlaten</a>
         </div>
