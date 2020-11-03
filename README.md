@@ -2,6 +2,8 @@
 De sorteerhoed is een online vragenlijst/quiz die studenten van de Hogeschool Leiden helpt bij het kiezen van een specialisatie.  
 Op basis van de gegeven antwoorden op de vragen zal de applicatie berekenen welke specialisatie het beste bij de student past.
 
+De vier mogelijke specialisatie's zijn: Software Engineering (SE), Forensisch ICT (FICT), Business Data Management (BDAM) en Interactie-technologie (IAT).
+
 Deze applicatie is gemaakt door de studenten van klas INF1BC/CTRL ALT DEL
 ## Benodigdheden
 - Python 3.9.0
