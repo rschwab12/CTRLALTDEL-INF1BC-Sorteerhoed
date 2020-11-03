@@ -11,57 +11,72 @@
 </head>
 
 <body>
-  <div id="question-body" class="is-vertical-center has-text-centered animate__animated animate__fadeIn">
-    <div class="container" style="display: block; max-width: 60%">
+  <div id="question-body" class="is-vertical-center has-text-centered">
+    <div class="container animate__animated" style="display: block; max-width: 60%">
 
       <!-- Showing the question -->
-      <div class="has-text-centered">
+      <div id="question-text" class="has-text-centered  animate__animated animate__fadeIn">
         <h2 class="subtitle is-4">{{ question.getID() }}. {{ question.getVraag() }}</h2>
       </div>
       &nbsp;
       <div class="has-text-centered">
-
-        <!-- Showing the possible answers -->
-        {% for antwoord in question.getAntwoorden() %}
-        {% set answer_class = "answer-box filled" if (filled > 0 and antwoord.getID() == filled) else "answer-box" %}
-        <div class="{{ answer_class }}" id="answer-option-{{ antwoord.getID() }}" data-answer="{{ antwoord.getID() }}">
-          <div class="has-text-left">
-            <span class="answer-prefix">{{ antwoord.getLetter() }}</span>{{ antwoord.getTekst() }}
+        <div id="answer-buttons" class="animate__animated animate__fadeIn">
+          <!-- Showing the possible answers -->
+          {% for antwoord in question.getAntwoorden() %}
+          {% set answer_class = "answer-box filled" if (filled > 0 and antwoord.getID() == filled) else "answer-box" %}
+          <div class="{{ answer_class }}" id="answer-option-{{ antwoord.getID() }}"
+            data-answer="{{ antwoord.getID() }}">
+            <div class="has-text-left">
+              <span class="answer-prefix">{{ antwoord.getLetter() }}</span>{{ antwoord.getTekst() }}
+            </div>
           </div>
+          {%endfor%}
         </div>
-        {%endfor%}
+
 
         <!-- Progressbar -->
         <progress class="progress is-success" value="{{ progress }}" max="100">{{ progress }}%</progress>
         {% if back %}
-        <a class="button is-danger" href="{{ url_for('vraag', a='back') }}"><i
-            class="fas fa-arrow-left"></i>&nbsp;Vorige
+        <a class="button is-danger" href="{{ url_for('vraag', a='back') }}">
+          Vorige
           vraag</a>
         {%endif%}
         &nbsp;
 
         <!-- Button to go to the overview -->
-        <a class="button is-info" href="{{ url_for('overzicht') }}"><i class="fas fa-list"></i>&nbsp;Overzicht</a>
+        <a class="button is-info startAnimButton" href="{{ url_for('overzicht') }}">Overzicht</a>
       </div>
       <br>
       <div class="has-text-centered">
         {% if ready == 'True' %}
         <!-- Showing notification to let user know this is the final question -->
-          <div class="notification is-info">
-            Dit is de laatste vraag.<br>Wanneer je deze vraag beantwoord beëindig je de vragenlijst en kun je niet meer terug om je antwoorden aan te passen.
-          </div>
+        <div class="notification is-info">
+          Dit is de laatste vraag.<br>Wanneer je deze vraag beantwoord beëindig je de vragenlijst en kun je niet meer
+          terug om je antwoorden aan te passen.
+        </div>
         {%endif%}
         {% if not next and answerCount < 19 %}
         <div class="notification is-danger">
-          Je hebt nog niet alle vragen beantwoord.<br>Na het kiezen van een antwoord wordt je doorverwezen naar de overzichtpagina.
+          Je hebt nog niet alle vragen beantwoord.<br>Na het kiezen van een antwoord wordt je doorverwezen naar de
+          overzichtpagina.
         </div>
         {%endif%}
 
       </div>
     </div>
   </div>
-  {{count}}
+  <div class="alt-footer has-text-centered hide-mobile">
+    <div class="alt-footer-contents">
+      <div>
+        <img class="ctrl-logo" src="{{ url_for('static', filename='img/vendor-color-logo.svg') }}"
+          alt="CTRL ALT DEL logo">
+      </div>
+      Deze web-app is ontwikkeld door de studenten van klas INF1BC/CTRL ALT DEL van de Hogeschool Leiden.
+    </div>
+  </div>
   <script src="{{ url_for('static', filename='js/answerFormHandler.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/main.min.js') }}"></script>
+
   <form id="answer-form" method="POST">
     <input type="hidden" name="csrf-token" value={{csrfToken}}>
     <input type="hidden" id="user-answer" name="user-answer">
