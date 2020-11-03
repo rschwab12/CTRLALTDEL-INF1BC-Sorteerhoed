@@ -12,7 +12,7 @@
 
 <body>
   <div id="question-body" class="is-vertical-center has-text-centered">
-    <div class="container" style="display: block; max-width: 60%">
+    <div class="container animate__animated" style="display: block; max-width: 60%">
 
       <!-- Showing the question -->
       <div id="question-text" class="has-text-centered  animate__animated animate__fadeIn">
@@ -44,7 +44,7 @@
         &nbsp;
 
         <!-- Button to go to the overview -->
-        <a class="button is-info" href="{{ url_for('overzicht') }}">Overzicht</a>
+        <a class="button is-info startAnimButton" href="{{ url_for('overzicht') }}">Overzicht</a>
       </div>
       <br>
       <div class="has-text-centered">
@@ -75,6 +75,8 @@
     </div>
   </div>
   <script src="{{ url_for('static', filename='js/answerFormHandler.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/main.min.js') }}"></script>
+
   <form id="answer-form" method="POST">
     <input type="hidden" name="csrf-token" value={{csrfToken}}>
     <input type="hidden" id="user-answer" name="user-answer">
