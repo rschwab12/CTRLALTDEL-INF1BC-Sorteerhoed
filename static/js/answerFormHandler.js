@@ -5,7 +5,9 @@ $('.answer-box').click(function() {
         $("#answer-form").submit();
     }, 500);
 
-    $("#question-body").toggleClass("animate__fadeIn");
-    $("#question-body").toggleClass("animate__fadeOut");
+    $("#question-text").toggleClass("animate__fadeIn");
+    $("#answer-buttons").toggleClass("animate__fadeIn");
 
+    $("#question-text").toggleClass("animate__fadeOut");
+    $("#answer-buttons").toggleClass("animate__fadeOut");
 });

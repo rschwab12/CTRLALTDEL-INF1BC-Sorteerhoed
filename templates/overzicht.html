@@ -20,18 +20,20 @@
         </p>
       </div>
       <div>
-        <!-- Retrieving each question, and checking if it has been answered to determine color of the button -->
-        {% for question in questions %}
-        {% if question.getID() in filled %}
-        <span>
-          <input class="button is-success" type="submit" name="button" value="{{ question.getID() }}">
-        </span>
-        {% else %}
-        <div style="display: inline-block; margin: .25em;">
-          <input class="button is-danger" type="submit" name="button" value="{{ question.getID() }}">
-        </div>
-        {%endif%}
-        {%endfor%}
+        <form method="POST">
+          <!-- Retrieving each question, and checking if it has been answered to determine color of the button -->
+          {% for question in questions %}
+          {% if question.getID() in filled %}
+          <div style="display: inline-block; margin: .25em;">
+            <input class="button is-success" type="submit" name="button" value="{{ question.getID() }}">
+          </div>
+          {% else %}
+          <div style="display: inline-block; margin: .25em;">
+            <input class="button is-danger" type="submit" name="button" value="{{ question.getID() }}">
+          </div>
+          {%endif%}
+          {%endfor%}
+        </form>
       </div>
     </div>
   </div>
@@ -43,6 +45,15 @@
     </p>
   </div>
   {%endif%}
+  <div class="alt-footer has-text-centered">
+    <div class="alt-footer-contents">
+      <div>
+        <img class="ctrl-logo" src="{{ url_for('static', filename='img/vendor-color-logo.svg') }}"
+          alt="CTRL ALT DEL logo">
+      </div>
+      Deze web-app is ontwikkeld door de studenten van klas INF1BC/CTRL ALT DEL van de Hogeschool Leiden.
+    </div>
+  </div>
 </body>
 
 </html>

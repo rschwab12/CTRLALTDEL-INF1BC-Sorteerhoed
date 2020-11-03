@@ -4,3 +4,4 @@
 @import"dark/bulma/bulma.min.css"(prefers-color-scheme: dark);
 @import"dark/core/checkbox.min.css"(prefers-color-scheme: dark);
 @import"dark/core/pageLayout.min.css"(prefers-color-scheme: dark);
+@import"dark/core/footer.min.css"(prefers-color-scheme: dark);
