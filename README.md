@@ -12,6 +12,15 @@ Deze applicatie is gemaakt door de studenten van klas INF1BC/CTRL ALT DEL
   ```
 - Config.ini bestand (zie config.sample.ini)
 - MySQL/MariaDB Server
+- Sorteerhoed database
+
+## Installatie
+
+- Installeer de benodigde modules en de benodigde software
+- Maak een database aan en importeer 1 van de 2 database bestanden (zie db map)
+- Stel het configuratie bestand in met de juiste instellingen
+- Controleer nog 1 keer of alles goed staat ingesteld.
+- Start de applicatie met het onderstaande commando en surf in je browser naar http://127.0.0.1:5000/ om de applicatie te kunnnen gebruiken.
 
 ## Applicatie starten
 ```sh
